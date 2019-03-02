@@ -4,8 +4,6 @@ import './registerServiceWorker'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-window.$ = window.jQuery = require('jquery');
-
 Vue.config.productionTip = false
 
 new Vue({
