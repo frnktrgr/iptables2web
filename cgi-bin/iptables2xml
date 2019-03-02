@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 echo 'Content-type: text/xml'
 echo
-echo "<?xml version= \"1.0\" encoding= \"UTF-8\"?>" 
-sudo iptables-save | iptables-xml
+echo "<?xml version= \"1.0\" encoding= \"UTF-8\"?>"
+sudo iptables-save -c | iptables-xml

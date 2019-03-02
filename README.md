@@ -12,7 +12,7 @@ chmod a+x /usr/lib/cgi-bin/iptables2xml
 ```bash
 visudo
 # add a line like
-www-data ALL= NOPASSWD: /sbin/iptables-save
+www-data ALL= NOPASSWD: /sbin/iptables-save -c
 ```
 
 ### Install iptables2web app
