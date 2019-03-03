@@ -1,33 +1,23 @@
 <template>
-  <div class="row">
-    <div class="col">
-      {{ index+1 }}
-    </div>
-    <div class="col">
-      {{ rule.$['packet-count'] }}
-    </div>
-    <div class="col">
-      {{ rule.$['byte-count'] }}
-    </div>
-    <div class="col">
-      {{ printTarget(rule.actions) }}
-    </div>
-    <div class="col">
-      {{ printProt(rule.conditions) }}
-    </div>
-    <div class="col">
-      --
-    </div>
-    <div class="col">
-      {{ printIn(rule.conditions) }}
-    </div>
-    <div class="col">
-      <!--{{ rule.conditions }}-->
-    </div>
-  </div>
+  <tr>
+    <th scope="row">{{ index+1 }}</th>
+    <td>{{ rule.$['packet-count'] }}</td>
+    <td>{{ rule.$['byte-count'] }}</td>
+    <td>{{ getTarget(rule.actions) }}</td>
+    <td>{{ getProt(rule.conditions) }}</td>
+    <td>--</td>
+    <td>{{ getIn(rule.conditions) }}</td>
+    <td>{{ getOut(rule.conditions) }}</td>
+    <td>{{ getSource(rule.conditions) }}</td>
+    <td>{{ getDestination(rule.conditions) }}</td>
+    <td>{{ getLeftover(rule.conditions) }}</td>
+  </tr>
 </template>
 
 <script>
+  function jsonCopy(src) {
+    return JSON.parse(JSON.stringify(src));
+  }
 export default {
   name: 'Rule',
   props: {
@@ -42,7 +32,7 @@ export default {
   computed: {
   },
   methods: {
-    printTarget: function(actions) {
+    getTarget: function(actions) {
       if (actions && typeof actions == 'object' && actions[0] && typeof actions[0] == 'object') {
         var action = actions[0];
         if ('call' in action) {
@@ -52,23 +42,93 @@ export default {
       }
       return "bar";
     },
-    printProt: function(conds) {
-      var match = this.getMatch(conds);
+    getProt: function(conds) {
+      let match = this.getMatch(conds);
       if (match && 'p' in match) {
         return match.p.join(', ');
       }
       return 'all';
     },
-    printIn: function(conds) {
-      var match = this.getMatch(conds);
+    getIn: function(conds) {
+      let vm = this;
+      let match = this.getMatch(conds);
       if (match && 'i' in match) {
-        return match.i;
+        let values = [];
+        match.i.forEach(function(value) {
+          values.push(vm.getValue(value));
+        });
+        return values.join(', ');
       }
       return '*';
     },
+    getOut: function(conds) {
+      let vm = this;
+      let match = this.getMatch(conds);
+      if (match && 'o' in match) {
+        let values = [];
+        match.o.forEach(function(value) {
+          values.push(vm.getValue(value));
+        });
+        return values.join(', ');
+      }
+      return '*';
+    },
+    getSource: function(conds) {
+      let vm = this;
+      let match = this.getMatch(conds);
+      if (match && 's' in match) {
+        let values = [];
+        match.s.forEach(function(value) {
+          values.push(vm.getValue(value));
+        });
+        return values.join(', ');
+      }
+      return '*';
+    },
+    getDestination: function(conds) {
+      let vm = this;
+      let match = this.getMatch(conds);
+      if (match && 'd' in match) {
+        let values = [];
+        match.d.forEach(function(value) {
+          values.push(vm.getValue(value));
+        });
+        return values.join(', ');
+      }
+      return '*';
+    },
+    getLeftover: function(conds) {
+      if (conds) {
+        let condsCopy = jsonCopy(conds);
+        let match = this.getMatch(condsCopy);
+        if (match) {
+          delete match.p;
+          delete match.i;
+          delete match.o;
+          delete match.s;
+          delete match.d;
+
+          if (Object.keys(match)) {
+            console.log(match);
+          }
+        }
+        return condsCopy;
+      }
+      return '';
+    },
+    getValue: function(value) {
+      if (typeof value == 'object') {
+        if ('_' in value) {
+          if ('$' in value && value.$.invert === '1') {
+            return '!'+value['_'];
+          }
+        }
+      }
+      return value;
+    },
     getMatch: function(conds) {
       if (conds && typeof conds == 'object' && conds[0] && typeof conds[0] == 'object') {
-        var cond = conds[0];
+        let cond = conds[0];
         if (typeof cond == 'object' && 'match' in cond) {
           return cond.match[0];
         }

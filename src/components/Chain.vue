@@ -7,35 +7,26 @@
       packets, <span class="text-monospace">{{ chain.$['byte-count'] }}</span> bytes)
     </div>
     <template v-if="chain.rule">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            num
-          </div>
-          <div class="col">
-            pkts
-          </div>
-          <div class="col">
-            bytes
-          </div>
-          <div class="col">
-            target
-          </div>
-          <div class="col">
-            prot
-          </div>
-          <div class="col">
-            opt
-          </div>
-          <div class="col">
-            in
-          </div>
-          <div class="col">
-            todo
-          </div>
-        </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col" style="width:1em;">num</th>
+          <th scope="col" style="width:1em;">pkts</th>
+          <th scope="col" style="width:1em;">bytes</th>
+          <th scope="col">target</th>
+          <th scope="col">prot</th>
+          <th scope="col">opt</th>
+          <th scope="col">in</th>
+          <th scope="col">out</th>
+          <th scope="col">source</th>
+          <th scope="col">destination</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
         <Rule v-for="(rule, index) in chain.rule" v-bind:rule="rule" v-bind:index="index" v-bind:key="index"/>
-      </div>
+        </tbody>
+      </table>
     </template>
   </div>
 </template>
