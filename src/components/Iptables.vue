@@ -4,8 +4,12 @@
     <button class="btn btn-primary" v-on:click="updateRules">Rulez</button>
     <div class="card m-2" v-for="table in tables" v-bind:key="table.$.name">
       <div class="card-header">
+        <h4>
         Table <span class="text-monospace">{{ table.$.name }}</span>
-        <button class="btn btn-secondary" v-on:click="toggleChains(table.$.name)">Toggle</button>
+        <div class="float-right">
+          <a href="javascript:void(0)" title="Toggle" v-on:click="toggleChains(table.$.name)">Toggle</a>
+        </div>
+        </h4>
       </div>
       <div class="card-body" v-if="isVisible(table.$.name)">
         <template v-if="table.chain">

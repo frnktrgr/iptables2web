@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div>
+    <h5>
       Chain <span class="text-monospace">{{ chain.$.name }}</span>
       (<template v-if="chain.$.policy">policy <span class="text-monospace">{{ chain.$.policy }}</span>&nbsp;</template>
       <span class="text-monospace">{{ chain.$['packet-count'] }}</span>
       packets, <span class="text-monospace">{{ chain.$['byte-count'] }}</span> bytes)
-    </div>
+    </h5>
     <template v-if="chain.rule">
       <table class="table">
         <thead>
