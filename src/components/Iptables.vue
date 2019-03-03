@@ -2,11 +2,12 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <button class="btn btn-primary" v-on:click="updateRules">Rulez</button>
-    <div class="card" v-for="table in tables" v-bind:key="table.$.name">
+    <div class="card m-2" v-for="table in tables" v-bind:key="table.$.name">
       <div class="card-header">
         Table <span class="text-monospace">{{ table.$.name }}</span>
+        <button class="btn btn-secondary" v-on:click="toggleChains(table.$.name)">Toggle</button>
       </div>
-      <div class="card-body">
+      <div class="card-body" v-if="isVisible(table.$.name)">
         <template v-if="table.chain">
           <Chain v-for="chain in table.chain" v-bind:key="chain.$.name" v-bind:chain="chain"/>
         </template>
@@ -30,6 +31,7 @@ export default {
   },
   data: function() {
     return {
+      hiddens: [],
       tables: [],
       raw: {},
       debug: {},
@@ -38,6 +40,22 @@ export default {
   computed: {
   },
   methods: {
+    isVisible: function(tableName) {
+      let index = this.hiddens.indexOf(tableName);
+      if (index !== -1) {
+        return false;
+      }
+      return true;
+    },
+    toggleChains: function(tableName) {
+      console.log("toggle " + tableName);
+      let index = this.hiddens.indexOf(tableName);
+      if (index !== -1) {
+        this.hiddens.splice(index, 1);
+      } else {
+        this.hiddens.push(tableName);
+      }
+    },
     updateRules: function() {
       var vm = this;
       var parseString = require('xml2js').parseString;
