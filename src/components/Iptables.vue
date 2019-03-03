@@ -7,7 +7,7 @@
         <h4>
         Table <span class="text-monospace">{{ table.$.name }}</span>
         <div class="float-right">
-          <a href="javascript:void(0)" title="Toggle" v-on:click="toggleChains(table.$.name)">Toggle</a>
+          <a href="javascript:void(0)" title="Toggle" v-on:click="toggleChains(table.$.name)"><i class="far fa-eye-slash" v-if="isVisible(table.$.name)"></i><i class="far fa-eye" v-if="!isVisible(table.$.name)"></i></a>
         </div>
         </h4>
       </div>

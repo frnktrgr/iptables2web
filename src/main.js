@@ -3,6 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 Vue.config.productionTip = false
 
