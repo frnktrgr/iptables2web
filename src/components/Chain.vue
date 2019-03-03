@@ -6,13 +6,13 @@
       <span class="text-monospace">{{ chain.$['packet-count'] }}</span>
       packets, <span class="text-monospace">{{ chain.$['byte-count'] }}</span> bytes)
     </h5>
-    <template v-if="chain.rule">
+    <div class="table-responsive" v-if="chain.rule">
       <table class="table">
         <thead>
         <tr>
-          <th scope="col" style="width:1em;">num</th>
-          <th scope="col" style="width:1em;">pkts</th>
-          <th scope="col" style="width:1em;">bytes</th>
+          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">num</th>
+          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">pkts</th>
+          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">bytes</th>
           <th scope="col">target</th>
           <th scope="col">prot</th>
           <th scope="col">opt</th>
@@ -27,7 +27,7 @@
         <Rule v-for="(rule, index) in chain.rule" v-bind:rule="rule" v-bind:index="index" v-bind:key="index"/>
         </tbody>
       </table>
-    </template>
+    </div>
   </div>
 </template>
 

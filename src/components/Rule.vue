@@ -1,8 +1,8 @@
 <template>
   <tr class="text-monospace">
-    <th>{{ index+1 }}</th>
-    <td>{{ rule.$['packet-count'] }}</td>
-    <td>{{ rule.$['byte-count'] }}</td>
+    <th class="d-none d-sm-table-cell">{{ index+1 }}</th>
+    <td class="d-none d-sm-table-cell">{{ rule.$['packet-count'] }}</td>
+    <td class="d-none d-sm-table-cell">{{ rule.$['byte-count'] }}</td>
     <td>{{ getTarget(rule.actions) }}</td>
     <td>{{ getProt(rule.conditions) }}</td>
     <td>--</td>

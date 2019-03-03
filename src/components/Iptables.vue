@@ -1,13 +1,11 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <button class="btn btn-primary" v-on:click="updateRules">Rulez</button>
     <div class="card m-2" v-for="table in tables" v-bind:key="table.$.name">
-      <div class="card-header">
+      <div class="card-header" v-on:click="toggleChains(table.$.name)" style="cursor: pointer;">
         <h4>
         Table <span class="text-monospace">{{ table.$.name }}</span>
         <div class="float-right">
-          <a href="javascript:void(0)" title="Toggle" v-on:click="toggleChains(table.$.name)"><i class="far fa-eye-slash" v-if="isVisible(table.$.name)"></i><i class="far fa-eye" v-if="!isVisible(table.$.name)"></i></a>
+          <i class="far fa-eye-slash" v-if="isVisible(table.$.name)"></i><i class="far fa-eye" v-if="!isVisible(table.$.name)"></i>
         </div>
         </h4>
       </div>
@@ -28,7 +26,6 @@
 export default {
   name: 'Iptables',
   props: {
-    msg: String
   },
   components: {
     Chain,
