@@ -1,6 +1,6 @@
 <template>
-  <tr>
-    <th scope="row">{{ index+1 }}</th>
+  <tr class="text-monospace">
+    <th>{{ index+1 }}</th>
     <td>{{ rule.$['packet-count'] }}</td>
     <td>{{ rule.$['byte-count'] }}</td>
     <td>{{ getTarget(rule.actions) }}</td>
@@ -98,6 +98,7 @@ export default {
       return '*';
     },
     getLeftover: function(conds) {
+      let vm = this;
       if (conds) {
         let condsCopy = jsonCopy(conds);
         let match = this.getMatch(condsCopy);
@@ -107,14 +108,37 @@ export default {
           delete match.o;
           delete match.s;
           delete match.d;
-
-          if (Object.keys(match)) {
-            console.log(match);
+          if (!Object.keys(match) || Object.keys(match).length == 0) {
+            delete condsCopy[0].match;
           }
         }
-        return condsCopy;
+        let leftoverValues = [];
+        condsCopy.forEach(function(loValue) {
+          if (typeof loValue == 'object' && 'comment' in loValue) {
+            let str = vm.getRecLeftover(loValue.comment[0].comment);
+            leftoverValues.push('/* ' + str.substring(1, str.length - 1) + ' */');
+          } else {
+            leftoverValues.push(vm.getRecLeftover(loValue));
+          }
+        });
+        return leftoverValues.join(', ');
       }
       return '';
+    },
+    getRecLeftover: function(lo) {
+      let vm = this;
+      if (typeof lo == 'object') {
+        let los = [];
+        Object.keys(lo).forEach(function(loKey) {
+          let prefix = loKey + ' ';
+          if (loKey == 0) {
+            prefix = '';
+          }
+          los.push(prefix + vm.getRecLeftover(lo[loKey]));
+        });
+        return los.join(' ')
+      }
+      return lo;
     },
     getValue: function(value) {
       if (typeof value == 'object') {
