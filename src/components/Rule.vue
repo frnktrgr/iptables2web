@@ -1,8 +1,8 @@
 <template>
   <tr class="text-monospace">
     <th class="d-none d-sm-table-cell">{{ index+1 }}</th>
-    <td class="d-none d-sm-table-cell">{{ rule.$['packet-count'] }}</td>
-    <td class="d-none d-sm-table-cell">{{ rule.$['byte-count'] }}</td>
+    <td class="d-none d-sm-table-cell">{{ humanReadable10(rule.$['packet-count']) }}</td>
+    <td class="d-none d-sm-table-cell">{{ humanReadable2(rule.$['byte-count']) }}</td>
     <td>{{ getTarget(rule.actions) }}</td>
     <td>{{ getProt(rule.conditions) }}</td>
     <td>--</td>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+  import { humanReadable10, humanReadable2 } from "../helpers";
   function jsonCopy(src) {
     return JSON.parse(JSON.stringify(src));
   }
@@ -32,6 +33,8 @@ export default {
   computed: {
   },
   methods: {
+    humanReadable10: humanReadable10,
+    humanReadable2: humanReadable2,
     getTarget: function(actions) {
       if (actions && typeof actions == 'object' && actions[0] && typeof actions[0] == 'object') {
         var action = actions[0];

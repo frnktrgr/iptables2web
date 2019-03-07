@@ -3,8 +3,8 @@
     <h5>
       Chain <span class="text-monospace">{{ chain.$.name }}</span>
       (<template v-if="chain.$.policy">policy <span class="text-monospace">{{ chain.$.policy }}</span>&nbsp;</template>
-      <span class="text-monospace">{{ chain.$['packet-count'] }}</span>
-      packets, <span class="text-monospace">{{ chain.$['byte-count'] }}</span> bytes)
+      <span class="text-monospace">{{ humanReadable10(chain.$['packet-count']) }}</span>
+      packets, <span class="text-monospace">{{ humanReadable2(chain.$['byte-count']) }}</span> bytes)
     </h5>
     <div class="table-responsive" v-if="chain.rule">
       <table class="table">
@@ -33,8 +33,9 @@
 
 <script>
   import Rule from "./Rule";
+  import { humanReadable10, humanReadable2 } from "../helpers";
 
-export default {
+  export default {
   name: 'Chain',
   props: {
     chain: Object
@@ -50,6 +51,8 @@ export default {
   computed: {
   },
   methods: {
+    humanReadable10: humanReadable10,
+    humanReadable2: humanReadable2,
   },
 }
 </script>
