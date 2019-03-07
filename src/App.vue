@@ -12,10 +12,10 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
+        <div class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Todo" aria-label="Todo">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" v-on:click="updateRules">Load</button>
-        </form>
+          <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="updateRules">Load</button>
+        </div>
       </div>
     </nav>
     <!--<img alt="Vue logo" src="./assets/logo.png">-->
