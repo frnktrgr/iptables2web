@@ -9,18 +9,21 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" v-bind:href="homeUrl">Home <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Todo" aria-label="Todo">
-          <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="updateRules">Load</button>
+          <input class="form-control mr-sm-2" type="text" placeholder="URL to cgi-bin" aria-label="URL to cgi-bin" v-model="dataUrl" v-bind:disabled="autoUpdate">
+          <button class="btn btn-outline-success my-2 my-sm-0" v-on:click="updateRules" title="Load"><i class="fas fa-cloud-download-alt"></i></button>
+          <button class="btn btn-outline-success my-2 my-sm-0 ml-3" v-on:click="play" v-if="!autoUpdate" title="Start"><i class="fas fa-play"></i></button>
+          <button class="btn btn-outline-success my-2 my-sm-0 ml-3" v-on:click="pause" v-if="autoUpdate" title="Pause"><i class="fas fa-pause"></i></button>
+          <button class="btn btn-outline-success my-2 my-sm-0 ml-3" v-on:click="login" title="Login"><i class="fas fa-sign-in-alt"></i></button>
+          <button class="btn btn-outline-success my-2 my-sm-0 ml-3" v-on:click="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
         </div>
       </div>
     </nav>
     <!--<img alt="Vue logo" src="./assets/logo.png">-->
-    <Iptables msg="Test" ref="iptables"/>
-    <!--<HelloWorld msg="Welcome to Your Vue.js App"/>-->
+    <Iptables v-bind:data-url="dataUrl" ref="iptables"/>
   </div>
 </template>
 
@@ -29,13 +32,40 @@ import Iptables from "./components/Iptables";
 
 export default {
   name: 'app',
+  data: function() {
+    return {
+      dataUrl: '/cgi-bin/iptables2xml',
+      homeUrl: process.env.BASE_URL,
+      autoUpdate : false,
+    }
+  },
   components: {
     Iptables,
   },
   methods: {
+    autoUpdateRules: function() {
+      if (this.autoUpdate) {
+        this.updateRules();
+        setTimeout(this.autoUpdateRules, 5000);
+      }
+    },
     updateRules: function() {
+      console.log("updateRules ...");
       this.$refs.iptables.updateRules();
-    }
+    },
+    login: function() {
+      window.location.href='/mellon/login?ReturnTo=' + window.location.href;
+    },
+    logout: function() {
+      window.location.href='/mellon/logout?ReturnTo=' + window.location.href;
+    },
+    play: function() {
+      this.autoUpdate = true;
+      this.autoUpdateRules();
+    },
+    pause: function() {
+      this.autoUpdate = false;
+    },
   },
 }
 </script>

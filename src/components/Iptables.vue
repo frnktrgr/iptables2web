@@ -15,28 +15,65 @@
         </template>
       </div>
     </div>
+    <div class="modal fade" id="ajaxErrorModal" tabindex="-1" role="dialog" aria-labelledby="ajaxErrorModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ajaxErrorModalLabel">HTTP Status Code {{ jqXHR.status }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <template v-if="typeof jqXHR == 'object'">
+              <template v-if="typeof jqXHR.responseJSON == 'object'">
+                <dl class="row text-danger">
+                  <template v-for="(value, key) in jqXHR.responseJSON">
+                    <dt class="col-sm-3">{{ key }}</dt>
+                    <dd class="col-sm-9">{{ value }}</dd>
+                  </template>
+                </dl>
+              </template>
+              <template v-else>
+                <p class="lead text-danger">{{ jqXHR.responseText }}</p>
+              </template>
+              readystate: {{ jqXHR.readyState }}
+            </template>
+            <template v-else>
+              <p class="lead text-danger">unknown error message</p>
+            </template>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Chain from "./Chain";
 
-  const $ = require('jquery')
-  window.$ = $
+  const $ = require('jquery');
+  window.$ = $;
+  let localData = {
+    hiddens: [],
+    tables: [],
+    raw: {},
+    debug: {},
+    jqXHR: {},
+  };
 export default {
   name: 'Iptables',
   props: {
+    dataUrl: String,
   },
   components: {
     Chain,
   },
   data: function() {
-    return {
-      hiddens: [],
-      tables: [],
-      raw: {},
-      debug: {},
-    }
+    return localData;
   },
   computed: {
   },
@@ -58,10 +95,15 @@ export default {
       }
     },
     updateRules: function() {
-      var vm = this;
-      var parseString = require('xml2js').parseString;
+      let vm = this;
+      let parseString = require('xml2js').parseString;
+      let url = '/cgi-bin/iptables2xml';
+      if (vm.dataUrl) {
+        url = vm.dataUrl;
+      }
+      console.log("loading data from " + url);
       $.ajax({
-        url: '/cgi-bin/iptables2xml',
+        url: url,
         dataType: 'text',
         success: function(xml) {
           vm.raw = xml;
@@ -85,6 +127,28 @@ export default {
     }
   },
 }
+  /* redirects main window when AJAX request indicates that the session has expired on the backend. */
+  function checkSession(event, xhr) {
+    if (xhr.readyState == 4)
+    {
+      if(xhr.getResponseHeader("Login-Screen") != null && xhr.getResponseHeader("Login-Screen").length)
+      {
+        window.location.href='sessionExpired.html'; //whatever
+      }
+    }
+  }
+  function errorHandle(event, jqXHR) {
+    localData.jqXHR = jqXHR;
+    console.log(jqXHR);
+    $('#ajaxErrorModal').modal('show');
+  }
+  $(function() {
+    $(document).ajaxComplete(checkSession);
+    $(document).ajaxError(errorHandle);
+  });
+
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
