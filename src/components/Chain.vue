@@ -4,8 +4,8 @@
     <h5>
       Chain <span class="text-monospace">{{ chain.$.name }}</span>
       (<template v-if="chain.$.policy">policy <span class="text-monospace">{{ chain.$.policy }}</span>&nbsp;</template>
-      <span class="text-monospace">{{ humanReadable10(chain.$['packet-count']) }}</span>
-      packets, <span class="text-monospace">{{ humanReadable2(chain.$['byte-count']) }}</span> bytes)
+      <span class="badge badge-primary text-monospace">{{ humanReadable10(chain.$['packet-count']) }}</span>
+      packets, <span class="badge badge-secondary text-monospace">{{ humanReadable2(chain.$['byte-count']) }}</span> bytes)
     </h5>
     <div class="table-responsive" v-if="chain.rule">
       <table class="table">

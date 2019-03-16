@@ -1,8 +1,8 @@
 <template>
   <tr class="text-monospace">
     <th class="d-none d-sm-table-cell">{{ index+1 }}</th>
-    <td class="d-none d-sm-table-cell">{{ humanReadable10(rule.$['packet-count']) }}</td>
-    <td class="d-none d-sm-table-cell">{{ humanReadable2(rule.$['byte-count']) }}</td>
+    <td class="d-none d-sm-table-cell"><span class="badge badge-primary text-monospace">{{ humanReadable10(rule.$['packet-count']) }}</span></td>
+    <td class="d-none d-sm-table-cell"><span class="badge badge-secondary text-monospace">{{ humanReadable2(rule.$['byte-count']) }}</span></td>
     <td><span v-html="getTarget(rule.actions)"></span></td>
     <td>{{ getProt(rule.conditions) }}</td>
     <td>--</td>
@@ -41,6 +41,18 @@ export default {
         var action = actions[0];
         if ('call' in action) {
           return "<a href=#" + this.table.$.name + "_" + Object.keys(action.call[0])[0] + ">" + Object.keys(action.call[0])[0] + "</a>";
+        }
+        if (Object.keys(action)[0] == 'ACCEPT') {
+          return '<i class="fas fa-arrow-alt-circle-right text-success" title="RETURN"></i>'
+        }
+        if (Object.keys(action)[0] == 'RETURN') {
+          return '<i class="fas fa-arrow-alt-circle-up text-info" title="RETURN"></i>'
+        }
+        if (Object.keys(action)[0] == 'REJECT') {
+          return '<i class="fas fa-arrow-alt-circle-left text-danger" title="REJECT"></i>'
+        }
+        if (Object.keys(action)[0] == 'DROP') {
+          return '<i class="fas fa-arrow-alt-circle-down text-danger" title="DROP"></i>'
         }
         return Object.keys(action)[0];
       }
