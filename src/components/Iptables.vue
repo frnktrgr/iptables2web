@@ -11,7 +11,7 @@
       </div>
       <div class="card-body" v-if="isVisible(table.$.name)">
         <template v-if="table.chain">
-          <Chain v-for="chain in table.chain" v-bind:key="chain.$.name" v-bind:chain="chain"/>
+          <Chain v-for="chain in table.chain" v-bind:key="chain.$.name" v-bind:chain="chain" v-bind:table="table"/>
         </template>
       </div>
     </div>

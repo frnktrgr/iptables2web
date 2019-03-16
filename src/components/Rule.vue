@@ -3,7 +3,7 @@
     <th class="d-none d-sm-table-cell">{{ index+1 }}</th>
     <td class="d-none d-sm-table-cell">{{ humanReadable10(rule.$['packet-count']) }}</td>
     <td class="d-none d-sm-table-cell">{{ humanReadable2(rule.$['byte-count']) }}</td>
-    <td>{{ getTarget(rule.actions) }}</td>
+    <td><span v-html="getTarget(rule.actions)"></span></td>
     <td>{{ getProt(rule.conditions) }}</td>
     <td>--</td>
     <td>{{ getIn(rule.conditions) }}</td>
@@ -23,6 +23,7 @@ export default {
   name: 'Rule',
   props: {
     rule: Object,
+    table: Object,
     index: Number,
   },
   data: function() {
@@ -39,7 +40,7 @@ export default {
       if (actions && typeof actions == 'object' && actions[0] && typeof actions[0] == 'object') {
         var action = actions[0];
         if ('call' in action) {
-          return Object.keys(action.call[0])[0];
+          return "<a href=#" + this.table.$.name + "_" + Object.keys(action.call[0])[0] + ">" + Object.keys(action.call[0])[0] + "</a>";
         }
         return Object.keys(action)[0];
       }

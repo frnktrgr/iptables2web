@@ -1,5 +1,6 @@
 <template>
   <div>
+    <a v-bind:id="chainAnchor" class="text-monospace" style="display: block; position: relative; top: -70px; visibility: hidden;"></a>
     <h5>
       Chain <span class="text-monospace">{{ chain.$.name }}</span>
       (<template v-if="chain.$.policy">policy <span class="text-monospace">{{ chain.$.policy }}</span>&nbsp;</template>
@@ -24,7 +25,7 @@
         </tr>
         </thead>
         <tbody>
-        <Rule v-for="(rule, index) in chain.rule" v-bind:rule="rule" v-bind:index="index" v-bind:key="index"/>
+        <Rule v-for="(rule, index) in chain.rule" v-bind:rule="rule" v-bind:table="table" v-bind:index="index" v-bind:key="index"/>
         </tbody>
       </table>
     </div>
@@ -38,7 +39,8 @@
   export default {
   name: 'Chain',
   props: {
-    chain: Object
+    chain: Object,
+    table: Object,
   },
   components: {
     Rule,
@@ -49,6 +51,9 @@
     }
   },
   computed: {
+    chainAnchor: function() {
+      return this.table.$.name + "_" + this.chain.$.name;
+    }
   },
   methods: {
     humanReadable10: humanReadable10,
