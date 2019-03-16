@@ -4,7 +4,8 @@
 **Warning**: Restrict web access to your `cgi-bin` and `iptables2web` locations in order to not reveal sensitive informations about your iptables rules!!!  
 
 ### Install iptables XML provider
-- Put `cgi-bin/iptables2xml` in your web server's `cgi-bin` directory and make it executable:
+- Download [iptables2xml](https://github.com/frnktrgr/iptables2web/blob/master/cgi-bin/iptables2xml)
+- Put `iptables2xml` in your web server's `cgi-bin` directory and make it executable:
 ```bash
 chmod a+x /usr/lib/cgi-bin/iptables2xml
 ```
@@ -16,7 +17,24 @@ www-data ALL= NOPASSWD: /sbin/iptables-save -c
 ```
 
 ### Install iptables2web app
-- *TODO*: deployment of iptables2web app
+- Download zip file from [latest release](https://github.com/frnktrgr/iptables2web/releases)
+- Unzip and move to web space, e.g. Ubuntu/Apache2:
+```bash
+unzip iptables2web-0.1.0.zip
+mv dist /var/www/html/iptables2web
+```
+- Edit config:
+```
+cd /var/www/html/iptables2web
+vi iptables2web.json
+```
+- `dataUrl`: path to iptables XML provider (see above) (default: `/cgi-bin/iptables2xml`)
+- `enableLogin`: enable/disable login/logout links (default: `true`)
+- `loginUrl`:  Login URL (default: `/mellon/login?ReturnTo=RETURN_TO_URL`)
+- `logoutUrl`: Logout URL (default: `/mellon/logout?ReturnTo=RETURN_TO_URL`)
+- `loginUrl` and `logoutUrl` support `RETURN_TO_URL` placeholder 
+
+**Try it!**
 
 ## Project setup
 ```
