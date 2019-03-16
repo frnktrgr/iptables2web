@@ -43,7 +43,7 @@ export default {
           return "<a href=#" + this.table.$.name + "_" + Object.keys(action.call[0])[0] + ">" + Object.keys(action.call[0])[0] + "</a>";
         }
         if (Object.keys(action)[0] == 'ACCEPT') {
-          return '<i class="fas fa-arrow-alt-circle-right text-success" title="RETURN"></i>'
+          return '<i class="fas fa-arrow-alt-circle-right text-success" title="ACCEPT"></i>'
         }
         if (Object.keys(action)[0] == 'RETURN') {
           return '<i class="fas fa-arrow-alt-circle-up text-info" title="RETURN"></i>'
