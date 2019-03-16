@@ -1,0 +1,6 @@
+{
+  "dataUrl": "/cgi-bin/iptables2xml",
+  "enableLogin": true,
+  "loginUrl": "/mellon/login?ReturnTo=RETURN_TO_URL",
+  "logoutUrl": "/mellon/logout?ReturnTo=RETURN_TO_URL"
+}
