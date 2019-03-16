@@ -8,20 +8,21 @@
       packets, <span class="badge badge-secondary text-monospace">{{ humanReadable2(chain.$['byte-count']) }}</span> bytes)
     </h5>
     <div class="table-responsive" v-if="chain.rule">
-      <table class="table">
+      <table class="table table-striped">
         <thead>
         <tr>
-          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">num</th>
-          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">pkts</th>
-          <th scope="col" style="width:1em;" class="d-none d-sm-table-cell">bytes</th>
+          <th class="d-md-none" scope="col">conditions</th>
+          <th scope="col" style="width:1em;" class="d-none d-md-table-cell">num</th>
+          <th scope="col" style="width:1em;" class="d-none d-md-table-cell">pkts</th>
+          <th scope="col" style="width:1em;" class="d-none d-md-table-cell">bytes</th>
           <th scope="col">target</th>
-          <th scope="col">prot</th>
-          <th scope="col">opt</th>
-          <th scope="col">in</th>
-          <th scope="col">out</th>
-          <th scope="col">source</th>
-          <th scope="col">destination</th>
-          <th scope="col"></th>
+          <th scope="col" class="d-none d-md-table-cell">prot</th>
+          <th scope="col" class="d-none d-md-table-cell">opt</th>
+          <th scope="col" class="d-none d-md-table-cell">in</th>
+          <th scope="col" class="d-none d-md-table-cell">out</th>
+          <th scope="col" class="d-none d-md-table-cell">source</th>
+          <th scope="col" class="d-none d-md-table-cell">destination</th>
+          <th scope="col">leftover</th>
         </tr>
         </thead>
         <tbody>

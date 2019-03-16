@@ -1,15 +1,16 @@
 <template>
   <tr class="text-monospace">
-    <th class="d-none d-sm-table-cell">{{ index+1 }}</th>
-    <td class="d-none d-sm-table-cell"><span class="badge badge-primary text-monospace">{{ humanReadable10(rule.$['packet-count']) }}</span></td>
-    <td class="d-none d-sm-table-cell"><span class="badge badge-secondary text-monospace">{{ humanReadable2(rule.$['byte-count']) }}</span></td>
+    <td class="d-md-none"><span v-html="getCompact(rule.conditions)"></span></td>
+    <th class="d-none d-md-table-cell">{{ index+1 }}</th>
+    <td class="d-none d-md-table-cell"><span class="badge badge-primary text-monospace">{{ humanReadable10(rule.$['packet-count']) }}</span></td>
+    <td class="d-none d-md-table-cell"><span class="badge badge-secondary text-monospace">{{ humanReadable2(rule.$['byte-count']) }}</span></td>
     <td><span v-html="getTarget(rule.actions)"></span></td>
-    <td>{{ getProt(rule.conditions) }}</td>
-    <td>--</td>
-    <td>{{ getIn(rule.conditions) }}</td>
-    <td>{{ getOut(rule.conditions) }}</td>
-    <td>{{ getSource(rule.conditions) }}</td>
-    <td>{{ getDestination(rule.conditions) }}</td>
+    <td class="d-none d-md-table-cell">{{ getProt(rule.conditions) }}</td>
+    <td class="d-none d-md-table-cell">--</td>
+    <td class="d-none d-md-table-cell">{{ getIn(rule.conditions) }}</td>
+    <td class="d-none d-md-table-cell">{{ getOut(rule.conditions) }}</td>
+    <td class="d-none d-md-table-cell">{{ getSource(rule.conditions) }}</td>
+    <td class="d-none d-md-table-cell">{{ getDestination(rule.conditions) }}</td>
     <td>{{ getLeftover(rule.conditions) }}</td>
   </tr>
 </template>
@@ -57,6 +58,34 @@ export default {
         return Object.keys(action)[0];
       }
       return "bar";
+    },
+    getCompact: function(conds) {
+      let result = "";
+      let prot = this.getProt(conds);
+      let opt = "--";
+      let iin = this.getIn(conds);
+      let iout = this.getOut(conds);
+      let source = this.getSource(conds);
+      let destination = this.getDestination(conds);
+      if (prot !== 'all') {
+        result += prot;
+      }
+      if (opt !== '--') {
+        result += ' '+opt;
+      }
+      if (iin !== '*') {
+        result += ' <span class="text-nowrap"><i class="fas fa-caret-up" title="in"></i>'+iin+'</span>';
+      }
+      if (iout !== '*') {
+        result += ' <span class="text-nowrap"><i class="fas fa-caret-down" title="out"></i>'+iout+'</span>';
+      }
+      if (source !== '*') {
+        result += ' <span class="text-nowrap"><i class="fas fa-caret-left" title="source"></i>'+source+'</span>';
+      }
+      if (destination !== '*') {
+        result += ' <span class="text-nowrap"><i class="fas fa-caret-right" title="destination"></i>'+destination+'</span>';
+      }
+      return result;
     },
     getProt: function(conds) {
       let match = this.getMatch(conds);
