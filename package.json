@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "zip": "bestzip $npm_package_name-$npm_package_version.zip dist/*"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
@@ -22,6 +23,7 @@
     "@vue/cli-plugin-pwa": "^3.4.0",
     "@vue/cli-service": "^3.4.0",
     "babel-eslint": "^10.0.1",
+    "bestzip": "^2.1.2",
     "copy-webpack-plugin": "^5.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
