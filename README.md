@@ -1,7 +1,7 @@
 # iptables2web
 
 ## Usage
-**Warning**: Restrict web access to your `cgi-bin` and `iptables2web` locations in order to not reveal sensitive informations about your iptables rules!!!  
+> :warning: **Warning: Restrict web access to your `cgi-bin` and `iptables2web` locations in order to not reveal sensitive informations about your iptables rules!!!**  
 
 ### Install iptables XML provider
 - Download [iptables2xml](https://github.com/frnktrgr/iptables2web/blob/master/cgi-bin/iptables2xml)
