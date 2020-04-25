@@ -9,24 +9,24 @@
     "zip": "bestzip $npm_package_name-$npm_package_version.zip dist/*"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.7.2",
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.7",
-    "register-service-worker": "^1.5.2",
-    "vue": "^2.6.6",
-    "xml2js": "^0.4.19"
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.5.0",
+    "popper.js": "^1.16.1",
+    "register-service-worker": "^1.7.1",
+    "vue": "^2.6.11",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-eslint": "^3.4.0",
-    "@vue/cli-plugin-pwa": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
-    "babel-eslint": "^10.0.1",
-    "bestzip": "^2.1.2",
-    "copy-webpack-plugin": "^5.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-plugin-pwa": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "babel-eslint": "^10.1.0",
+    "bestzip": "^2.1.5",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
   }
 }
