@@ -47,7 +47,6 @@ fetch('./iptables2web.json')
 .then(
   function(response) {
     if (response.status !== 200) {
-      console.log('Looks like there was a problem. Status Code: ' +  response.status);
       return;
     }
 
@@ -58,8 +57,7 @@ fetch('./iptables2web.json')
     });
   }
 )
-.catch(function(err) {
-  console.log('Fetch Error :-S', err);
+.catch(function() {
 });
 
 export default {
@@ -78,7 +76,6 @@ export default {
       }
     },
     updateRules: function() {
-      console.log("updateRules ...");
       this.$refs.iptables.updateRules();
     },
     login: function() {

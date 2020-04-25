@@ -29,8 +29,8 @@
               <template v-if="typeof jqXHR.responseJSON == 'object'">
                 <dl class="row text-danger">
                   <template v-for="(value, key) in jqXHR.responseJSON">
-                    <dt class="col-sm-3">{{ key }}</dt>
-                    <dd class="col-sm-9">{{ value }}</dd>
+                    <dt class="col-sm-3" :key="key">{{ key }}</dt>
+                    <dd class="col-sm-9" :key="key">{{ value }}</dd>
                   </template>
                 </dl>
               </template>
@@ -86,7 +86,6 @@ export default {
       return true;
     },
     toggleChains: function(tableName) {
-      console.log("toggle " + tableName);
       let index = this.hiddens.indexOf(tableName);
       if (index !== -1) {
         this.hiddens.splice(index, 1);
@@ -101,7 +100,6 @@ export default {
       if (vm.dataUrl) {
         url = vm.dataUrl;
       }
-      console.log("loading data from " + url);
       $.ajax({
         url: url,
         dataType: 'text',
@@ -139,7 +137,6 @@ export default {
   }
   function errorHandle(event, jqXHR) {
     localData.jqXHR = jqXHR;
-    console.log(jqXHR);
     $('#ajaxErrorModal').modal('show');
   }
   $(function() {
